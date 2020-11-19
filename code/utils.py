@@ -36,30 +36,43 @@ def plot_multiple_images(images_dict, rows = 1 , cols = 1 ):
     plt.show()
 
 
-def get_one_hot(targets, nb_classes):
-    ''' Code from : https://stackoverflow.com/questions/38592324/one-hot-encoding-using-numpy '''
-    res = np.eye(nb_classes)[np.array(targets).reshape(-1)]
-    return res.reshape(list(targets.shape)+[nb_classes])
-
-def one_hot_encode(y_train, N = 21) :
+def one_hot_encode(y_train, N = 22) :
     ''' One hot encode the labels '''
-    assert(len(y_train.shape) == 3)
-    y_train_hot = np.zeros((y_train.shape[0],  y_train.shape[1],N, y_train.shape[2]))
+    if y_train.shape == 2 :
+        y_train = y_train.reshape(1, y_train.shape[0],y_train.shape[1])
+    y_train_hot = np.zeros((y_train.shape[0], N, y_train.shape[1], y_train.shape[2]))
 
     for i,img in enumerate(y_train) :
         for j,x in enumerate(img) :
+            for k,y in enumerate(x) :
 
-            hot_vector = get_one_hot(x.astype(np.int32),N).reshape(N,-1)
+                hot_vector = np.zeros((N,))
+                hot_vector[int(y)] = 1
+                y_train_hot[i,:,j,k] = hot_vector
 
-            y_train_hot[i,j,:] = hot_vector
 
     return y_train_hot.reshape(y_train.shape[0], N ,y_train.shape[1], y_train.shape[2])
 
 
+def get_batch(X_train, y_train, idxs,current_batch , BATCH_SIZE ) :
+    ''' Return the batch of X_train and y_train '''
+    n = idxs.shape[0]
+    indexes = idxs[current_batch : min(n, current_batch+BATCH_SIZE)]
 
-def one_hot_encode_torch(y_train, N = 21) :
+    batch_x0 = X_train[0][indexes, : ]
+    batch_x1 = X_train[1][indexes, :]
+
+    batch_x = [ batch_x0, batch_x1 ]
+    batch_y = y_train[indexes, :]
+
+    return batch_x, batch_y
+
+
+
+
+def one_hot_encode_torch(y_train, N = 23) :
     ''' One hot encode the labels. y_train is a torch tensor '''
-    assert(len(y_train.shape) == 3)
+    # assert(len(y_train.shape) == 3)
 
     result = one_hot_encode(y_train.detach().numpy())
     return torch.from_numpy(result)
@@ -110,9 +123,24 @@ def split_train_valid_test(nyu) :
     return train, val, test
 
 
+
+def get_train_val_test(dataset, is_torch = True ) :
+    ''' Return X and Y from the dataset (nyu) '''
+    X = [dataset['images'], dataset['depths']]
+    Y = dataset['labels']
+    if is_torch :
+
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+        X[0] = torch.from_numpy(X[0]).type(torch.float).to(device)
+        X[1] = torch.from_numpy(X[1]).type(torch.float).to(device)
+        Y =  torch.from_numpy(Y.astype(float)).to(device)
+
+    return X,Y
+
+
 def convert_hot_to_squeeze(img, N = N ) :
-    ''' Convert an image of shape [N, 480, 640] into [480, 640] by taking the argmax '''
-    assert(img.shape == (N, 480,640))
+    ''' Convert an image of shape [N, x,y ] into [x, y] by taking the argmax '''
     return np.argmax(img, axis = 0)
 
 def feature_map_size(in_ch  , K : int , k_shape : list , s : int , p : int ) :
@@ -163,7 +191,6 @@ def plot_sns(x,y, xlabel, ylabel, title) :
 
     plt.ylabel(ylabel)
     plt.xlabel(xlabel)
-
     ax.grid(True)
     plt.title(title)
     plt.show()

@@ -24,5 +24,7 @@ import matplotlib.pyplot as plt
 import os
 import seaborn as sns
 import pandas as pd
+import time
+from torch.utils.tensorboard import SummaryWriter
 
 N = 21

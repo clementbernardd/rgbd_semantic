@@ -1,5 +1,5 @@
 from utils import *
-from cbr import * 
+from cbr import *
 
 class Encoder(nn.Module) :
   '''
@@ -29,7 +29,7 @@ class Encoder(nn.Module) :
     self.cbr3 = CBR(3, 64, params)
     self.cbr4 = CBR(64,64, params)
 
-    self.cbr3_ = CBR(3, 64, params)
+    self.cbr3_ = CBR(3,64 , params)
     self.cbr4_ = CBR(64, 64, params)
 
     self.pooling2 = nn.MaxPool2d((2,2), stride = 2 , return_indices = True )
@@ -75,7 +75,7 @@ class Encoder(nn.Module) :
     self.cbr13 = CBR(512, 512, params)
 
 
-    self.pooling5 = nn.MaxPool2d((2,2), stride = 2 , return_indices = True )
+    self.pooling5 = nn.MaxPool2d((2,2), stride = 2 ,padding = 0 , return_indices = True )
     self.dropout3 = nn.Dropout2d(p=0.2)
 
     self.cbr11_ = CBR( 256,512, params)
@@ -91,6 +91,8 @@ class Encoder(nn.Module) :
     depth_encoder = x[1]
     # Unpool indices
     unpool = []
+    # Pool indices
+    pool = []
 
     ''' Block 1'''
     # CBR RGB
@@ -102,6 +104,7 @@ class Encoder(nn.Module) :
     # Fusion
     fusion = depth_encoder + rgb_encoder
     # Pooling
+    pool.append(rgb_encoder.shape)
     rgb_encoder, indices = self.pooling1(fusion)
     depth_encoder, _ = self.pooling1(depth_encoder)
     # Keep the indices for the unpooling operation
@@ -119,6 +122,7 @@ class Encoder(nn.Module) :
     # Fusion
     fusion = depth_encoder + rgb_encoder
     # Pooling
+    pool.append(rgb_encoder.shape)
     rgb_encoder, indices = self.pooling2(fusion)
     depth_encoder , _ = self.pooling2(depth_encoder)
 
@@ -140,6 +144,7 @@ class Encoder(nn.Module) :
     # Fusion
     fusion = depth_encoder + rgb_encoder
     # Pooling
+    pool.append(rgb_encoder.shape)
     rgb_encoder, indices = self.pooling3(fusion)
     depth_encoder ,_= self.pooling3(depth_encoder)
     # Dropout
@@ -163,8 +168,9 @@ class Encoder(nn.Module) :
     # Fusion
     fusion = depth_encoder + rgb_encoder
     # Pooling
+    pool.append(rgb_encoder.shape)
     rgb_encoder, indices = self.pooling4(fusion)
-    depth_encoder ,_= self.pooling4(depth_encoder)
+    depth_encoder ,_ = self.pooling4(depth_encoder)
     # Dropout
     rgb_encoder = self.dropout2(rgb_encoder)
     depth_encoder = self.dropout2_(depth_encoder)
@@ -185,6 +191,7 @@ class Encoder(nn.Module) :
     # Fusion
     fusion = depth_encoder + rgb_encoder
     # Pooling
+    pool.append(rgb_encoder.shape)
     rgb_encoder, indices = self.pooling4(fusion)
    # Dropout
     rgb_encoder = self.dropout3(rgb_encoder)
@@ -193,4 +200,4 @@ class Encoder(nn.Module) :
 
     ''' End Block 5 '''
 
-    return rgb_encoder, unpool
+    return rgb_encoder, unpool, pool

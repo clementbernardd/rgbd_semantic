@@ -1,6 +1,6 @@
 from utils import *
 from cbr import *
-from cbr_t import * 
+from cbr_t import *
 
 class Decoder(nn.Module) :
   '''
@@ -13,6 +13,7 @@ class Decoder(nn.Module) :
       -out_ch : The size of the output channels
     '''
     self.unpool_indexes = None
+    self.pool = None
 
     super(Decoder, self).__init__()
 
@@ -77,14 +78,10 @@ class Decoder(nn.Module) :
 
     assert(len(self.unpool_indexes) == 5)
 
-    # for m in self.unpool_indexes :
-    #   print(m.shape)
 
     ''' Block 1 '''
     # Unpooling
-
-    x = self.unpooling1(x, self.unpool_indexes[-1])
-
+    x = self.unpooling1(x, self.unpool_indexes[-1], output_size=self.pool[-1])
     # CBR
     x = self.cbr1(x)
     x = self.cbr2(x)
@@ -93,10 +90,10 @@ class Decoder(nn.Module) :
     x = self.dropout1(x)
     ''' End Block 1 '''
 
+
     ''' Block 2 '''
     # Unpooling
-
-    x = self.unpooling2(x, self.unpool_indexes[-2])
+    x = self.unpooling2(x, self.unpool_indexes[-2], output_size=self.pool[-2])
     # CBR
     x = self.cbr4(x)
     x = self.cbr5(x)
@@ -109,7 +106,7 @@ class Decoder(nn.Module) :
     ''' Block 3 '''
 
     # Unpooling
-    x = self.unpooling3(x, self.unpool_indexes[-3])
+    x = self.unpooling3(x, self.unpool_indexes[-3], output_size=self.pool[-3])
     # CBR
     x = self.cbr7(x)
     x = self.cbr8(x)
@@ -121,7 +118,7 @@ class Decoder(nn.Module) :
     ''' Block 4 '''
 
     # Unpooling
-    x = self.unpooling4(x, self.unpool_indexes[-4])
+    x = self.unpooling4(x, self.unpool_indexes[-4], output_size=self.pool[-4])
     # CBR
     x = self.cbr9(x)
     x = self.cbr10(x)
@@ -131,7 +128,7 @@ class Decoder(nn.Module) :
     ''' Block 5 '''
 
     # Unpooling
-    x = self.unpooling5(x, self.unpool_indexes[-5])
+    x = self.unpooling5(x, self.unpool_indexes[-5], output_size=self.pool[-5])
     # CBR
     x = self.cbr11(x)
     # Score
