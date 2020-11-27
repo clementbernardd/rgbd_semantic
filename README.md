@@ -59,7 +59,7 @@ I only kept the 21 classes that were the most present in the dataset
 |---| --- |
 | ![](/images/original_rgb.png) | ![](/images/sub_rgb.png) |
 
-I subsampled the image by 2
+I subsampled the images by 2
 
 | Original Labels (480x640x1) with 894 classes  | Subsampled labels used (240x320x1) with 21 classes  |
 |---| --- |
