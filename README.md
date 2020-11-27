@@ -9,7 +9,7 @@ I implemented the two dual encoders of the article in PyTorch : FuseNet and GCN.
 <p align="center">
 
 <a>
-    <img src='./images/all_results.png'  width="400"/>
+    <img src='./images/all_results.png'  width="1000"/>
 </a>
 </p>
 
