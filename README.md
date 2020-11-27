@@ -30,6 +30,14 @@ I implemented the two dual encoders of the article in PyTorch : FuseNet and GCN.
 
 ## Getting Started
 
+### Structure
+
+- `code` : The main directory where all the codes are
+- `images` : Images used for the presentation
+- `model` : Directory where the model parameters are stored
+- `tmp` : Directory where the tensorboard metrics are stored
+
+
 
 
 ## Dataset preparation
@@ -66,6 +74,14 @@ The models of the articles are two dual encoder-decoder where the depth is added
 
 The encoder for the RGB images has the same architecture as the VGG16-Net.
 
+The architecture is the following :
+
+| FuseNet architecture |
+|---|
+| ![](/images/fusenet.png) |
+
+
+
 | Prediction with FuseNet on training set | Label |
 |---| --- |
 | ![](/images/fusenet_train.png) | ![](/images/fusenet_train_label.png) |
@@ -79,6 +95,14 @@ The encoder for the RGB images has the same architecture as the VGG16-Net.
 
 It has almost the same architecture as FuseNet. It adds extra layers of global convolutional network (convolution of size kxk).
 Here the convolution added is 5x5.
+
+The architecture is the following :
+
+| GCN architecture |
+|---|
+| ![](/images/gcn.png) | 
+
+
 
 | Prediction with GCN on training set | Label |
 |---| --- |
