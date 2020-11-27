@@ -99,10 +99,16 @@ Here is a summary of the final scores :
 | ![](/images/histogram.png) |
 
 
-| Models  | FuseNet without transfer learning | FuseNet with transfer learning (VGG16-Net) | GCN with transfer learning | FuseNet of the article | GCN of the article |
-|---| --- |---| --- |---| --- |
-| Mean accuracy | 25.37 | 33.51 | 39.24 | 46.42 | 48.49 |
-|---| --- |---| --- |---| --- |
-|Mean IoU | 16.87 | 20.27 | 23.50 | 35.48 | 36.94 |
-|---| --- |---| --- |---| --- |
-|Pixel accuracy | 46.63 | 51.30 | 55.62 | 68.76 | 69.11 |
+
+
+<table align="center">
+<tr>
+<td><b> Models <td><b> FuseNet without transfer learning <td><b> GCN with transfer learning <td> <b> FuseNet of the article <td> <b> GCN of the article
+<tr>
+<td> Mean accuracy <td> 25.37 <td> 33.51 <td> 39.24 <td> 46.42 <td> 48.49
+<tr>
+<td> Mean IoU <td> 16.87 <td> 20.27 <td> 23.50 <td> 35.48 <td> 36.94
+<tr>
+<td> Pixel accuracy <td> 46.63 <td> 51.30 <td> 55.62 <td> 68.76 <td> 69.11
+<tr>
+</table>
