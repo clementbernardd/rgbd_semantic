@@ -34,6 +34,13 @@ I implemented the two dual encoders of the article in PyTorch : FuseNet and GCN.
 
 ## Dataset preparation
 
+### NYUv2 Dataset
+
+This dataset contains 1449 RGBD images for 894 different classes.
+
+| Original dataset distribution (truncated) | Dataset used (21 classes) |
+|---| --- |
+| ![](/images/distribution_classes.png) | ![](/images/distribution_20_classes.png) |
 
 
 
