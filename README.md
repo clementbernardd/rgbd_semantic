@@ -48,7 +48,7 @@ This dataset contains 1449 RGBD images for 894 different classes.
 
 | Original Labels ( 480 x 640 x 1 ) with 894 classes  | Subsampled labels used (240 x 320 x 1) with 21 classes  |
 |---| --- |
-| ![](/images/original_rgb.png) | ![](/images/sub_rgb.png) |
+| ![](/images/original_labels.png) | ![](/images/sub_labels.png) |
 
 
 
