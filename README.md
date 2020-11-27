@@ -100,7 +100,6 @@ Here is a summary of the final scores :
 
 
 | Models  | FuseNet without transfer learning | FuseNet with transfer learning (VGG16-Net) | GCN with transfer learning | FuseNet of the article | GCN of the article |
-
 |---| --- |---| --- |---| --- |
 | Mean accuracy | 25.37 | 33.51 | 39.24 | 46.42 | 48.49 |
 |---| --- |---| --- |---| --- |
