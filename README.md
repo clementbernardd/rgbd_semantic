@@ -112,3 +112,9 @@ Here is a summary of the final scores :
 <td> Pixel accuracy <td> 46.63 <td> 51.30 <td> 55.62 <td> 68.76 <td> 69.11
 <tr>
 </table>
+
+Final summary of the results :
+
+| Summary |
+|---|
+| ![](/images/results.png) |
